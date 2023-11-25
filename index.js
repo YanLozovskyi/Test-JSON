@@ -130,7 +130,7 @@ function handleButtonClick(e) {
           <div class="card-modal">
           <button class="modal-close-btn" type="button">
           <svg width="15" height="15">
-             <use href="/images/sprite.svg#icon-close"></use>
+             <use href="./images/sprite.svg#icon-close"></use>
            </svg>
           </button>
           <h2 class="post-title">${title.textContent}</h2>
