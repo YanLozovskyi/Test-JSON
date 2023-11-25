@@ -114,19 +114,20 @@ const addPostToDOM = ({ title, id, body }) => {
 };
 
 function handleButtonClick(e) {
-  const postId = e.target.id;
-  const className = e.target.className;
+  if (e.target.tagName === "BUTTON") {
+    const postId = e.target.id;
+    const className = e.target.className;
 
-  const listItem = document.getElementById(`post${postId}`);
+    const listItem = document.getElementById(`post${postId}`);
 
-  const title = listItem.querySelector(".post-title");
-  const body = listItem.querySelector(".post-body");
-  if (postId) {
-    if (className.includes("open-button")) {
-      blogPostApi.getPostById(postId);
-      refs.portal.insertAdjacentHTML(
-        "beforeend",
-        `<div class="backdrop">
+    const title = listItem.querySelector(".post-title");
+    const body = listItem.querySelector(".post-body");
+    if (postId) {
+      if (className.includes("open-button")) {
+        blogPostApi.getPostById(postId);
+        refs.portal.insertAdjacentHTML(
+          "beforeend",
+          `<div class="backdrop">
           <div class="card-modal">
           <button class="modal-close-btn" type="button">
           <svg width="15" height="15">
@@ -138,19 +139,19 @@ function handleButtonClick(e) {
           <p class="post-text post-body">${body.textContent}</p>
           </div>
         </div>`
-      );
+        );
 
-      document
-        .querySelector(".modal-close-btn")
-        .addEventListener("click", () => {
-          refs.portal.innerHTML = "";
-        });
-    } else if (className.includes("delete-button")) {
-      blogPostApi.deletePost(postId);
-    } else if (className.includes("edit-button")) {
-      refs.portal.insertAdjacentHTML(
-        "beforeend",
-        `<div class="backdrop">
+        document
+          .querySelector(".modal-close-btn")
+          .addEventListener("click", () => {
+            refs.portal.innerHTML = "";
+          });
+      } else if (className.includes("delete-button")) {
+        blogPostApi.deletePost(postId);
+      } else if (className.includes("edit-button")) {
+        refs.portal.insertAdjacentHTML(
+          "beforeend",
+          `<div class="backdrop">
           <div class="update-modal">
           <button class="modal-close-btn" type="button">
              <svg width="15" height="15">
@@ -167,31 +168,32 @@ function handleButtonClick(e) {
             </form>
           </div>
         </div>`
-      );
+        );
 
-      document
-        .querySelector(".modal-close-btn")
-        .addEventListener("click", () => {
-          refs.portal.innerHTML = "";
-        });
-
-      const updateForm = document.getElementById("updateForm");
-      updateForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const updatedTitle = document.getElementById("up_title").value;
-        const updatedBody = document.getElementById("up_body").value;
-
-        if (updatedTitle && updatedBody) {
-          blogPostApi.updatePost(postId, {
-            title: updatedTitle,
-            body: updatedBody,
+        document
+          .querySelector(".modal-close-btn")
+          .addEventListener("click", () => {
+            refs.portal.innerHTML = "";
           });
 
-          updateForm.reset();
-          refs.portal.innerHTML = "";
-        }
-      });
+        const updateForm = document.getElementById("updateForm");
+        updateForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const updatedTitle = document.getElementById("up_title").value;
+          const updatedBody = document.getElementById("up_body").value;
+
+          if (updatedTitle && updatedBody) {
+            blogPostApi.updatePost(postId, {
+              title: updatedTitle,
+              body: updatedBody,
+            });
+
+            updateForm.reset();
+            refs.portal.innerHTML = "";
+          }
+        });
+      }
     }
   }
 }
