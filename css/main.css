@@ -42,7 +42,7 @@ body {
       rgba(255, 255, 0, 0.3)
     ),
     linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
-    url("/images//logo_privat.png");
+    url("../images/logo_privat.png");
   background-position: 0%;
   background-repeat: no-repeat;
   background-size: 100%;
